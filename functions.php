@@ -42,10 +42,21 @@ function updateSubs($conn, $channelid, $subs){
     mysqli_query($conn, $query);
 }
 
+function updateViews($conn, $channelid, $views){
+    $query = "Update channels set views = '$views' where channelid = '$channelid'";
+    mysqli_query($conn, $query);
+}
+
 function compare($a, $b)
 {
     return $a->statistics->subscriberCount < $b->statistics->subscriberCount;
 }
+
+
+
+
+
+
 
 function paginate($page_query, $page, $record_per_page, $class, $conn)
 {

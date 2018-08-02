@@ -8,16 +8,15 @@
       <div class="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" href="index">Home</a>
+            <a class="nav-link active" href="index" id="homelink">Home</a>
           </li>
-          
-          
-          
           <li class="nav-item btn-submit-recipe">
-            <form action="" method="get" id="search-form">
-                <input id="search" name="q" style="margin-top:17px" type="text" class="form-control" placeholder="Search Channels..." value="<?php if(isset($q)){ echo $q; } ?>">
-            </form>
+                <a class="btn nav-link" data-toggle="modal" data-target="#myModal" href="">Add Channel</a>
           </li>
+
+          
+          
+          
         </ul>
       </div>
     </div>
