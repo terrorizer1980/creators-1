@@ -57,7 +57,7 @@ include 'functions.php';
             
           ?>
 
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-lg-3 col-sm-6" id="<?php echo $channeldata[$i]['id']; ?>">
                         <div class="box grid recipes">
                             <div class="by"><i class="fa fa-eye" aria-hidden="true"></i>
                                 <span id="<?php echo $channeldata[$i]['id']; ?>-views" title="Total Views Count" style="color:white" class="details">

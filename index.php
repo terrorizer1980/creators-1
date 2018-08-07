@@ -164,7 +164,7 @@ $run = mysqli_query($conn, $query);
     </head>
 
     <body>
-        <?php include 'includes/nav.php'; ?>
+        <?php $page='index'; include 'includes/nav.php'; ?>
         <div class="list">
             <div class="container">
                 <div class="row">
@@ -311,6 +311,9 @@ $run = mysqli_query($conn, $query);
                             </div>
                             
                         </center>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Close</button>
+                        </div>
                       </div>
 
                       
@@ -366,6 +369,7 @@ $run = mysqli_query($conn, $query);
         
             window.onload = init;
             var search = false;
+            var count = 0;
             $(document).ready(function () {
                 $("#search").autocomplete({
                     source: "autocomplete.php",
@@ -380,7 +384,7 @@ $run = mysqli_query($conn, $query);
                         $('#youtubers').hide();
                         $('#searchloader').show();
                         $('#loadmore').hide();
-                        $(".tag").append(' <a href="#!">'+$("#search").val()+'</a>');
+                        $(".tag").append(' <a href="#!">'+$("#search").val()+' <span data-channelid="'+ui.item.channelid+'" class="removebtn" style="margin-left:15px;font-size:20px">x</span></a>');
                         $.ajax({
                            url: "getdata",
                            data : {search: ui.item.channelid ,offset:0, order:'<?php echo $ord; ?>', sort: '<?php echo $sort; ?>'},
@@ -389,8 +393,9 @@ $run = mysqli_query($conn, $query);
                              if(data){
                                 $("#search").val('');
                                 $('#searchloader').hide();
-                                $('#youtubers').prepend(data);
+                                $('#youtubers').append(data);
                                 $('#youtubers').show();
+                                count++;
                                 init();
                              }else{
                                 $('#youtubers').html('No records found');
@@ -399,6 +404,17 @@ $run = mysqli_query($conn, $query);
                         });
                     }
                 });
+            });
+        
+        
+            $(document).on('click', '.removebtn', function(){
+               var channelid = $(this).attr('data-channelid');
+               $("#"+channelid).remove();
+               $(this).parent().remove();
+               count--;
+               if(count==0){
+                   window.location='index';
+               }
             });
         
             $(document).ready(function () {
