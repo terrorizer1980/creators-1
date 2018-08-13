@@ -1,5 +1,5 @@
 <?php
-include "db.php";
+include "../db.php";
 if(isset($_POST['id']))
 	{
         $id = pvalidate($_POST['id']);
@@ -37,7 +37,7 @@ if(isset($_POST['id']))
 }
 
 function pvalidate($value){
-include "db.php";
+include "../db.php";
 $value = mysqli_real_escape_string($conn, htmlentities(strip_tags($value)));
 return $value;
 }

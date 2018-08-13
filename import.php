@@ -22,21 +22,19 @@ if(isset($_POST["import"]))
     $output .= "<tr>";
     
     $url = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(3, $row)->getValue());
-    $title = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(2, $row)->getValue());
-    $subs= mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(4, $row)->getValue());
+    $insta = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(7, $row)->getValue());
     
     
     
-    if(empty($url)){
-        
-    }else{
+    if(!empty($url) && !empty($insta)){
         $pos = strrpos($url, '/');
         $channelid = $pos === false ? $url : substr($url, $pos + 1);
         $output .= '<td>'.$i.'</td>';
         $output .= '<td>'.$channelid.'</td>';
+        $output .= '<td>'.$insta.'</td>';
         $i++;
         
-        $query = "INSERT INTO channels(id, channelid, name, subscribers) VALUES (NULL, '$channelid', '$title', '$subs' )";
+        $query = "update channels set instagram = '$insta' where channelid = '$channelid'";
         mysqli_query($conn, $query);
     }
     

@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../db.php';
 $channelid = $_POST['id'];
 $posturl = "https://www.googleapis.com/youtube/v3/search?key=$youtube_key&channelId=$channelid&part=snippet,id&type=video&order=date&maxResults=5";
 $data = file_get_contents( $posturl, false);

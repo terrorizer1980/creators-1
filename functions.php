@@ -52,39 +52,13 @@ function compare($a, $b)
     return $a->statistics->subscriberCount < $b->statistics->subscriberCount;
 }
 
-
-
-
-
-
-
-function paginate($page_query, $page, $record_per_page, $class, $conn)
-{
-    $pagination = "";
-    //$page_query = "SELECT * FROM $table ORDER BY id DESC";
-    $page_result = mysqli_query($conn, $page_query);
-    $total_records = mysqli_num_rows($page_result);
-    $total_pages = ceil($total_records/$record_per_page);
-    $start_loop = $page;
-    $difference = $total_pages - $page;
-    if($difference <= 5){
-        $start_loop = 1;
-    }$end_loop = $total_pages;
-        if($page > 1){
-            $pagination.= "<li><a href='#' data-page='$i' class='$class'><i class='fa fa-angle-left'></i></a></li>";
-        }
-        for($i=$start_loop; $i<=$end_loop; $i++){
-            if($page==$i){
-                $pagination.= "<li class=''><a data-page='$i' class='$class' href='#'>".$i."</a></li>";
-            }else{
-                $pagination.= "<li><a data-page='$i' class='$class' href='#'>".$i."</a></li>";
-            }
-            
-        }
-        if($page <= $end_loop){
-            $pagination.= "<li><a data-page='$total_pages' class='$class' href='#' ><span aria-hidden='true'><i class='fa fa-angle-right'></i></span></a><li>";
-        }
-    return $pagination;
+function getSocialLinks($channelid, $conn){
+    $query = "select * from channels where channelid='$channelid'";
+    $run = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($run);
+    return $row;
 }
+
+
 
 ?>

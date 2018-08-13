@@ -1,13 +1,13 @@
 <?php
-include 'db.php';
+include '../db.php';
 if(isset($_POST['channelid'])){
+    
     $arrContextOptions=array(
         "ssl"=>array(
             "verify_peer"=>false,
             "verify_peer_name"=>false,
         ),
     );
-    
     
     $id = $_POST['channelid'];
     $posturl = 'https://www.googleapis.com/youtube/v3/search?key='.$youtube_key.'&channelId='.$id.'&part=snippet,id&order=date&maxResults=1';

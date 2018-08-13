@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../db.php';
 if(isset($_POST['normal'])){
     $offset = $_POST['offset'];
     $ord = $_POST['order'];
@@ -7,7 +7,7 @@ if(isset($_POST['normal'])){
     $limit = 40;
     $query = "select * from channels order by $sort $ord LIMIT $offset,$limit";
     $run = mysqli_query($conn, $query);
-    $json = include('data.php');
+    $json = include('../data.php');
     return $json;
     exit;
 }
@@ -21,7 +21,7 @@ if(isset($_POST['filter'])){
     $operator = $_POST['operator'];
     $query = "select * from channels where subscribers $operator $subscribers order by subscribers $ord LIMIT $offset,$limit";
     $run = mysqli_query($conn, $query);
-    $json = include('data.php');
+    $json = include('../data.php');
     return $json;
     exit;
 }
@@ -34,7 +34,7 @@ if(isset($_POST['search'])){
     $search = $_POST['search'];
     $query = "select * from channels where channelid = '$search'";
     $run = mysqli_query($conn, $query);
-    $json = include('data.php');
+    $json = include('../data.php');
     return $json;
     exit;
 }
