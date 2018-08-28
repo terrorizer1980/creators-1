@@ -152,6 +152,11 @@ include 'includes/init.php';
                                 <button data-title="Latest Videos" class="showvideos btn btn-danger"><i class="fa fa-video"></i></button>
                                 <button data-twitter="" data-title="Latest Tweets" class="showtweets btn btn-primary"><i class="fab fa-twitter"></i></button>
                                 <a href="" target="_blank" style="color:white" class="instagram btn instagram"><i class="fab fa-instagram"></i></a>
+                                <a id="facebook" href="" target="_blank" style="color:white;background:#3B5998" class="btn"><i class="fab fa-facebook"></i></a>
+                                <a id="snapchat" href="" target="_blank" style="color:black;background:#FFFC00;" class="btn"><i class="fab fa-snapchat-square"></i></a>
+                                <a id="website" href="" target="_blank" style="color:white" class="btn btn-success"><i class="fas fa-globe"></i></a>
+                                <a id="gplus" href="" target="_blank" style="color:white;background:#d34836" class="btn"><i class="fab fa-google-plus-square"></i></a>
+                                <a id="vk" href="" target="_blank" style="color:white;background:#4c75a3" class="btn"><i class="fab fa-vk"></i></a>
                             </div>
                             <div class="form-group">
                                 <h4 id="detailtitle">Latest Videos</h4>
@@ -201,7 +206,105 @@ include 'includes/init.php';
                },
             });
         });
+        
+$(document).on('click','.showinfo',function(e){
+    e.preventDefault();
+    var title = $(this).attr('data-title');
+    var channelid = $(this).attr('data-channelid');
+    var subs = $("#"+channelid+'-subs').text();
+    var img = $("#"+channelid+'-img').attr('src');
+    var views = $("#"+channelid+'-views').text();
+    var instagram = $(this).attr('data-instagram');
+    var twitter = $(this).attr('data-twitter');
+    var snapchat = $(this).attr('data-snapchat');
+    var facebook = $(this).attr('data-facebook');
+    var vk = $(this).attr('data-vk');
+    var website = $(this).attr('data-website');
+    var gplus = $(this).attr('data-gplus');
+    $(".showtweets").attr('data-twitter', channelid);
+    $("#ctitle").html(title);
+    $("#csubs").html(subs);
+    $("#cviews").html(views);
+    $("#cimg").attr('src', img);
+    $("#videoloader").show();
+    $("#cvideos").empty();
+    $('#infomodal').modal('show');
+    $("#tweets").hide();
+    $("#cvideos").show();
+    $("#detailtitle").html('Latest Videos');
+    if(instagram!=''){
+        $(".instagram").attr('href', instagram);
+        $(".instagram").show();
+    }else{
+        $(".instagram").hide();
+    }
+    
+    if(facebook!=''){
+        $("#facebook").attr('href', facebook);
+        $("#facebook").show();
+    }else{
+        $("#facebook").hide();
+    }
+            
+    if(snapchat!=''){
+        $("#snapchat").attr('href', snapchat);
+        $("#snapchat").show();
+    }else{
+        $("#snapchat").hide();
+    }
+    
+    if(website!=''){
+        $("#website").attr('href', website);
+        $("#website").show();
+    }else{
+        $("#website").hide();
+    }
+    
+    if(gplus!=''){
+        $("#gplus").attr('href', gplus);
+        $("#gplus").show();
+    }else{
+        $("#gplus").hide();
+    }
+    
+    if(vk!=''){
+        $("#vk").attr('href', vk);
+        $("#vk").show();
+    }else{
+        $("#vk").hide();
+    }
+    
+    
+
+    if(twitter!=''){
+        $("#tweets").empty();
+        $("#tweets").html('<a class="twitter-timeline" href="https://twitter.com/'+twitter+'?ref_src=twsrc%5Etfw">Tweets by '+twitter+'</a>');
+        $("#tweets").append($("<script />", {
+              src: 'https://platform.twitter.com/widgets.js'
+        }));
+        $('.showtweets').show();
+    }else{
+        $('.showtweets').hide();
+    }
+
+    $.ajax({
+       url: "ajax/ajaxgetvideos",
+       type: "POST",
+       data: {id:channelid},
+       success : function(data){
+         if(data){
+           $("#videoloader").hide();
+           $("#cvideos").html(data);
+         }else{
+
+         }
+       },
+    });
+});
+
+        
+        
     </script>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app.js?<?php echo time(); ?>"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     </html>

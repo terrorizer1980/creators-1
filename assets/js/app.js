@@ -118,61 +118,6 @@ $(document).on('click','.showinfoimg',function(e){
 });
         
         
-$(document).on('click','.showinfo',function(e){
-    e.preventDefault();
-    var title = $(this).attr('data-title');
-    var channelid = $(this).attr('data-channelid');
-    var subs = $("#"+channelid+'-subs').text();
-    var img = $("#"+channelid+'-img').attr('src');
-    var views = $("#"+channelid+'-views').text();
-    var instagram = $(this).attr('data-instagram');
-    var twitter = $(this).attr('data-twitter');
-    $(".showtweets").attr('data-twitter', channelid);
-    $("#ctitle").html(title);
-    $("#csubs").html(subs);
-    $("#cviews").html(views);
-    $("#cimg").attr('src', img);
-    $("#videoloader").show();
-    $("#cvideos").empty();
-    $('#infomodal').modal('show');
-    $("#tweets").hide();
-    $("#cvideos").show();
-    $("#detailtitle").html('Latest Videos');
-    if(instagram!=''){
-        $(".instagram").attr('href', instagram);
-        $(".instagram").show();
-    }else{
-        $(".instagram").hide();
-    }
-
-    if(twitter!=''){
-        $("#tweets").empty();
-        $("#tweets").html('<a class="twitter-timeline" href="https://twitter.com/'+twitter+'?ref_src=twsrc%5Etfw">Tweets by '+twitter+'</a>');
-        $("#tweets").append($("<script />", {
-              src: 'https://platform.twitter.com/widgets.js'
-        }));
-        $('.showtweets').show();
-    }else{
-        $('.showtweets').hide();
-    }
-
-    $.ajax({
-       url: "ajax/ajaxgetvideos",
-       type: "POST",
-       data: {id:channelid},
-       success : function(data){
-         if(data){
-           $("#videoloader").hide();
-           $("#cvideos").html(data);
-         }else{
-
-         }
-       },
-    });
-
-
-
-});
 
 $(function () {
     var btn = $("#addchannelbtn");

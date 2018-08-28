@@ -21,20 +21,30 @@ if(isset($_POST["import"]))
    {
     $output .= "<tr>";
     
-    $url = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(3, $row)->getValue());
-    $insta = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(7, $row)->getValue());
+    $url = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(0, $row)->getValue());
+    $fb = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(1, $row)->getValue());
+    $insta = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(2, $row)->getValue());
+    $twitter = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(3, $row)->getValue());
+    $gp = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(4, $row)->getValue());
+    $wb = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(5, $row)->getValue());
+    $sp = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(6, $row)->getValue());
+    $vk = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(7, $row)->getValue());
     
-    
-    
-    if(!empty($url) && !empty($insta)){
+    if(!empty($url)){
         $pos = strrpos($url, '/');
         $channelid = $pos === false ? $url : substr($url, $pos + 1);
         $output .= '<td>'.$i.'</td>';
         $output .= '<td>'.$channelid.'</td>';
         $output .= '<td>'.$insta.'</td>';
+        $output .= '<td>'.$fb.'</td>';
+        $output .= '<td>'.$twitter.'</td>';
+        $output .= '<td>'.$gp.'</td>';
+        $output .= '<td>'.$wb.'</td>';
+        $output .= '<td>'.$sp.'</td>';
+        $output .= '<td>'.$vk.'</td>';
         $i++;
         
-        $query = "update channels set instagram = '$insta' where channelid = '$channelid'";
+        $query = "update channels set facebook = '$fb', twitter = '$twitter', website='$wb', snapchat = '$sp', gplus='$gp', vk='$vk', instagram = '$insta' where channelid = '$channelid'";
         mysqli_query($conn, $query);
     }
     

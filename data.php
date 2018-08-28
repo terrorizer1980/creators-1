@@ -27,6 +27,11 @@ foreach($response->items as $item){
     $socialmedia = getSocialLinks($item->id, $conn);
     $channeldata[$i]['instagram'] = $socialmedia['instagram'];
     $channeldata[$i]['twitter'] = $socialmedia['twitter'];
+    $channeldata[$i]['facebook'] = $socialmedia['facebook'];
+    $channeldata[$i]['website'] = $socialmedia['website'];
+    $channeldata[$i]['gplus'] = $socialmedia['gplus'];
+    $channeldata[$i]['snapchat'] = $socialmedia['snapchat'];
+    $channeldata[$i]['vk'] = $socialmedia['vk'];
     updateSubs($conn, $item->id, $item->statistics->subscriberCount);
     updateViews($conn, $item->id, $item->statistics->viewCount);
     $i++;
@@ -71,7 +76,7 @@ for ($i = 0; $i < count($channeldata); $i++) {
               <img id="<?php echo $channeldata[$i]['id']; ?>-img" src="https://discoverbrands.co/public/img/loader.gif" data-src="<?php echo $channeldata[$i]['image'] ?>" alt="">
             </a>
             <h2>
-                <a class="showinfo" data-twitter="<?php echo $channeldata[$i]['twitter']; ?>" data-instagram="<?php echo $channeldata[$i]['instagram']; ?>" data-channelid="<?php echo $channeldata[$i]['id']; ?>" data-title="<?php echo $channeldata[$i]['title']; ?>" target="_blank" href="https://www.youtube.com/channel/<?php echo $channeldata[$i]['id']; ?>">
+                <a class="showinfo" data-gplus="<?php echo $channeldata[$i]['gplus']; ?>" data-twitter="<?php echo $channeldata[$i]['twitter']; ?>" data-instagram="<?php echo $channeldata[$i]['instagram']; ?>" data-facebook="<?php echo $channeldata[$i]['facebook']; ?>" data-website="<?php echo $channeldata[$i]['website']; ?>" data-snapchat="<?php echo $channeldata[$i]['snapchat']; ?>" data-vk="<?php echo $channeldata[$i]['vk']; ?>" data-channelid="<?php echo $channeldata[$i]['id']; ?>" data-title="<?php echo $channeldata[$i]['title']; ?>" target="_blank" href="https://www.youtube.com/channel/<?php echo $channeldata[$i]['id']; ?>">
                     <?php echo shortTitle($channeldata[$i]['title']); ?>
                 </a>
             </h2>
