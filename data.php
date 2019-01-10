@@ -32,6 +32,8 @@ foreach($response->items as $item){
     $channeldata[$i]['gplus'] = $socialmedia['gplus'];
     $channeldata[$i]['snapchat'] = $socialmedia['snapchat'];
     $channeldata[$i]['vk'] = $socialmedia['vk'];
+    $channeldata[$i]['spotify'] = $socialmedia['spotify'];
+    
     updateSubs($conn, $item->id, $item->statistics->subscriberCount);
     updateViews($conn, $item->id, $item->statistics->viewCount);
     $i++;
@@ -77,8 +79,12 @@ for ($i = 0; $i < count($channeldata); $i++) {
             </a>
             <h2>
                 <a class="showinfo" data-gplus="<?php echo $channeldata[$i]['gplus']; ?>" data-twitter="<?php echo $channeldata[$i]['twitter']; ?>" data-instagram="<?php echo $channeldata[$i]['instagram']; ?>" data-facebook="<?php echo $channeldata[$i]['facebook']; ?>" data-website="<?php echo $channeldata[$i]['website']; ?>" data-snapchat="<?php echo $channeldata[$i]['snapchat']; ?>" data-vk="<?php echo $channeldata[$i]['vk']; ?>" data-channelid="<?php echo $channeldata[$i]['id']; ?>" data-title="<?php echo $channeldata[$i]['title']; ?>" target="_blank" href="https://www.youtube.com/channel/<?php echo $channeldata[$i]['id']; ?>">
-                    <?php echo shortTitle($channeldata[$i]['title']); ?>
+                    <?php echo shortTitle($channeldata[$i]['title']); ?> 
+                    
                 </a>
+                <?php if(!empty($channeldata[$i]['spotify'])){ ?>
+                    <a href="spotify?id=<?php echo $channeldata[$i]['spotify']; ?>"><i style="color:red;font-size:25px" class="fab fa-spotify"></i></a>
+                <?php } ?>
             </h2>
 
            <p><span class="details" title='<p><span style="text-decoration:underline">Channel Title:</span><br><?php echo filteredDesc($channeldata[$i]['title']);  ?></p><p><span style="text-decoration:underline">Description:</span><br><?php echo filteredDesc($channeldata[$i]['description']); ?></p><p><span style="text-decoration:underline">Country:</span><br><?php echo filteredDesc($channeldata[$i]['country']); ?></p><p><span style="text-decoration:underline">Keywords:</span><br><?php echo filteredDesc($channeldata[$i]['keywords']); ?></p>'> <i class="fa fa-info-circle" style="color:#e13b2b;cursor:pointer"></i> More</span> - <span class="details" title="Total Videos Count"><i class="fa fa-video" style="color:#e13b2b"></i> <b><?php echo $channeldata[$i]['videos']; ?></b></span></p>

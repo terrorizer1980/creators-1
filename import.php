@@ -1,8 +1,17 @@
 <?php
-include 'db.php';
+ini_set('memory_limit', '-1');
+$conn =  mysqli_connect('localhost', 'root', '', 'music');
+$youtube_key = 'AIzaSyAMwSQU5ZumKTFhRERSsKYgfY3iA9Oz4X8';
 $output = '';
 if(isset($_POST["import"]))
 {
+$context = stream_context_create(
+    array(
+        "http" => array(
+            "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+        )
+    )
+);
  $ext = explode(".", $_FILES["excel"]["name"]); // For getting Extension of selected file
  $extension = end($ext);
  $allowed_extension = array("xls", "xlsx", "csv"); //allowed extension
@@ -22,30 +31,26 @@ if(isset($_POST["import"]))
     $output .= "<tr>";
     
     $url = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(0, $row)->getValue());
-    $fb = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(1, $row)->getValue());
-    $insta = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(2, $row)->getValue());
-    $twitter = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(3, $row)->getValue());
-    $gp = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(4, $row)->getValue());
-    $wb = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(5, $row)->getValue());
-    $sp = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(6, $row)->getValue());
-    $vk = mysqli_real_escape_string($conn, $worksheet->getCellByColumnAndRow(7, $row)->getValue());
     
     if(!empty($url)){
         $pos = strrpos($url, '/');
         $channelid = $pos === false ? $url : substr($url, $pos + 1);
+        $posturl = 'https://www.googleapis.com/youtube/v3/channels?part=topicDetails,status,brandingSettings,contentDetails,contentOwnerDetails,localizations,snippet,statistics,topicDetails&id='.$channelid.'&key='.$youtube_key;
+        $data = file_get_contents( $posturl, false, $context);
+        $response = json_decode($data);
+        
+        
+        $country = isset($response->items[0]->snippet->country) ? $response->items[0]->snippet->country : 'N/A';
+        $tags = isset($response->items[0]->brandingSettings->channel->keywords) ? $response->items[0]->brandingSettings->channel->keywords : 'N/A';
+        
+        $query = "INSERT INTO channels (id, channelid, country, tags) VALUES (NULL, '$channelid', '$country', '$tags')";
+        mysqli_query($conn, $query);
         $output .= '<td>'.$i.'</td>';
         $output .= '<td>'.$channelid.'</td>';
-        $output .= '<td>'.$insta.'</td>';
-        $output .= '<td>'.$fb.'</td>';
-        $output .= '<td>'.$twitter.'</td>';
-        $output .= '<td>'.$gp.'</td>';
-        $output .= '<td>'.$wb.'</td>';
-        $output .= '<td>'.$sp.'</td>';
-        $output .= '<td>'.$vk.'</td>';
         $i++;
         
-        $query = "update channels set facebook = '$fb', twitter = '$twitter', website='$wb', snapchat = '$sp', gplus='$gp', vk='$vk', instagram = '$insta' where channelid = '$channelid'";
-        mysqli_query($conn, $query);
+        
+        
     }
     
     $output .= '</tr>';
